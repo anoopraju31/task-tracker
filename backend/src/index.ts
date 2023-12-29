@@ -1,4 +1,7 @@
 import express from 'express'
+import { connectToMongoDB } from './db'
+
+connectToMongoDB()
 
 const app = express()
 const PORT = 5500
