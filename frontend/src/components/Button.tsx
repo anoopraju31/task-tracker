@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
 type Props = {
-	type: 'submit' | 'reset' | 'button'
+	type?: 'submit' | 'reset' | 'button'
 	title: string
-	handleClick: () => void
+	handleClick?: () => void
 	styles?: string
 }
 

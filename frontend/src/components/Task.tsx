@@ -14,14 +14,14 @@ const Task = () => {
 			<div className='items-center p-6 flex gap-4 justify-end'>
 				<Button
 					title='Mark as done'
-					styles='bg-green-500 hover:bg-green-500/90'
+					styles='!bg-green-500 hover:!bg-green-500/90'
 					handleClick={() => {}}
 					type='button'
 				/>
 				<Button title='Edit' handleClick={() => {}} type='button' />
 				<Button
 					title='Delete'
-					styles='bg-red-500 hover:bg-red-500/90'
+					styles='!bg-red-500 hover:!bg-red-500/90'
 					handleClick={() => {}}
 					type='button'
 				/>
