@@ -1,6 +1,7 @@
 import Header from '../components/Header'
 import TasksContainer from '../components/TasksContainer'
 import TaskForm from '../components/TaskForm'
+import Footer from '../components/Footer'
 
 const Home = () => {
 	return (
@@ -8,6 +9,7 @@ const Home = () => {
 			<Header />
 			<TaskForm />
 			<TasksContainer />
+			<Footer />
 		</div>
 	)
 }
