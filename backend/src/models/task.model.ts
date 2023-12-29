@@ -30,3 +30,6 @@ const TaskSchema = new mongoose.Schema({
 })
 
 export const TaskModel = mongoose.model('Task', TaskSchema)
+
+export const getTasks = (userId: mongoose.Types.ObjectId | string) =>
+	TaskModel.find({ userId })
