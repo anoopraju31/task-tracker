@@ -1,12 +1,12 @@
 import Header from '../components/Header'
 import TasksContainer from '../components/TasksContainer'
-import TodoForm from '../components/TodoForm'
+import TaskForm from '../components/TaskForm'
 
 const Home = () => {
 	return (
 		<div className='container mx-auto max-w-3xl'>
 			<Header />
-			<TodoForm />
+			<TaskForm />
 			<TasksContainer />
 		</div>
 	)
