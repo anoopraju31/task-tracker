@@ -31,5 +31,44 @@ const TaskSchema = new mongoose.Schema({
 
 export const TaskModel = mongoose.model('Task', TaskSchema)
 
-export const getTasks = (userId: mongoose.Types.ObjectId | string) =>
-	TaskModel.find({ userId })
+export const getTasks = async (userId: mongoose.Types.ObjectId | string) => {
+	try {
+		const tasks = await TaskModel.find({ userId })
+
+		return tasks
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
+export const createTask = async (taskData: Record<string, any>) => {
+	try {
+		const task = await new TaskModel(taskData).save()
+		return task.toObject()
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
+export const deleteTaskById = async (id: string) => {
+	try {
+		await TaskModel.findOneAndDelete({ _id: id })
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
+export const updateTaskById = async (
+	id: string,
+	taskData: Record<string, any>,
+) => {
+	try {
+		await TaskModel.findOneAndUpdate({ _id: id, taskData })
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
