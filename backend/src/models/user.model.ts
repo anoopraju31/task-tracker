@@ -17,6 +17,12 @@ const UserSchema = new mongoose.Schema({
 			select: false,
 		},
 	},
+	tasks: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Task',
+		},
+	],
 })
 
 export const UserModel = mongoose.model('User', UserSchema)
