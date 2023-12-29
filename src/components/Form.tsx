@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react'
 import InputField from './InputField'
+import Button from './Button'
 
 const Form = () => {
 	return (
@@ -25,6 +26,8 @@ const Form = () => {
 					console.log(e)
 				}}
 			/>
+
+			<Button />
 		</form>
 	)
 }
