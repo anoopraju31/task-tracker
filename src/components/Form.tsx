@@ -27,7 +27,7 @@ const Form = () => {
 				}}
 			/>
 
-			<Button />
+			<Button type='submit' title='Add Task' handleClick={() => {}} />
 		</form>
 	)
 }
