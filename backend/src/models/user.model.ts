@@ -27,4 +27,44 @@ const UserSchema = new mongoose.Schema({
 
 export const UserModel = mongoose.model('User', UserSchema)
 
-export const getUserByEmail = (email: string) => UserModel.findOne({ email })
+export const getUserByEmail = async (email: string) => {
+	try {
+		const user = await UserModel.findOne({ email })
+
+		return user
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
+export const createUser = async (userData: Record<string, any>) => {
+	try {
+		const user = await new UserModel(userData).save()
+		return user.toObject()
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
+export const deleteUserByEmail = async (email: string) => {
+	try {
+		await UserModel.findOneAndDelete({ email })
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
+export const updateUserByEmail = async (
+	email: string,
+	newUserData: Record<string, any>,
+) => {
+	try {
+		await UserModel.findOneAndUpdate({ email, newUserData })
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
