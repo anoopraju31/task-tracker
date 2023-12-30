@@ -27,6 +27,17 @@ const UserSchema = new mongoose.Schema({
 
 export const UserModel = mongoose.model('User', UserSchema)
 
+export const getUserById = async (id: string) => {
+	try {
+		const user = await UserModel.findOne({ _id: id })
+
+		return user
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
 export const getUserByEmail = async (email: string) => {
 	try {
 		const user = await UserModel.findOne({ email })
