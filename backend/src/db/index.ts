@@ -1,31 +1,27 @@
-import mongoose, { Connection } from 'mongoose'
+import mongoose from 'mongoose'
 import 'dotenv/config'
 
-let dbInstance: Connection | null = null
+let dbInstance: typeof mongoose | null = null
 
-export const connectToMongoDB = async (): Promise<Connection> => {
+export const connectToMongoDB = async (): Promise<typeof mongoose> => {
 	try {
 		if (!dbInstance) {
 			const connectionUri: string = process.env.MONGO_URL as string
-			const connection = await mongoose.createConnection(connectionUri)
+			const connection = await mongoose.connect(connectionUri)
 
 			dbInstance = connection
 
-			connection.on('connected', () => {
+			mongoose.connection.on('connected', () => {
 				console.log('Mongoose connected to the database')
 			})
 
-			connection.on('error', (error: Error) => {
+			mongoose.connection.on('error', (error: Error) => {
 				console.error('Mongoose connection error:', error)
 			})
 
-			connection.on('disconnected', () => {
+			mongoose.connection.on('disconnected', () => {
 				console.log('Mongoose disconnected from the database')
 			})
-		}
-
-		if (!dbInstance) {
-			throw new Error('Failed to establish database connection')
 		}
 
 		return dbInstance
@@ -38,7 +34,7 @@ export const connectToMongoDB = async (): Promise<Connection> => {
 export const disconnectFromDatabase = async (): Promise<void> => {
 	try {
 		if (dbInstance) {
-			await dbInstance.close()
+			await dbInstance.disconnect()
 			console.log('Disconnected from the database')
 		}
 	} catch (error: any) {
