@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
 		unique: true,
 	},
 	authentication: {
-		pasword: {
+		password: {
 			type: String,
 			required: true,
 			select: false,
@@ -40,7 +40,8 @@ export const getUserByEmail = async (email: string) => {
 
 export const createUser = async (userData: Record<string, any>) => {
 	try {
-		const user = await new UserModel(userData).save()
+		const user = new UserModel(userData)
+		await user.save()
 		return user.toObject()
 	} catch (error) {
 		console.error(error)
