@@ -1,41 +1,13 @@
 import express from 'express'
-import { signInSchema, signUpSchema } from '../utills/validations'
-import {
-	createUser,
-	getFullUserDetailsByEmail,
-	getUserByEmail,
-} from '../models/user.model'
-import { comparePassword, encryptPassword } from '../utills/password'
+import { signInSchema } from '../utills/validations'
+import { getFullUserDetailsByEmail } from '../models/user.model'
+import { comparePassword } from '../utills/password'
 import { generateToken } from '../utills/jwt'
+import { signUpController } from '../controllers/user.controllers'
 
 const router = express.Router()
 
-router.post('/sign-up', async (req, res) => {
-	try {
-		const { name, email, password } = req.body
-		const validationResponse = signUpSchema.safeParse({ name, email, password })
-
-		if (!validationResponse.success)
-			return res.status(401).json(validationResponse.error.issues[0].message)
-
-		const isUserExists = await getUserByEmail(email)
-
-		if (isUserExists)
-			return res.status(400).json({ message: 'User already exists.' })
-
-		const hashedPassword = await encryptPassword(password)
-
-		await createUser({
-			name,
-			email,
-			authentication: { password: hashedPassword },
-		})
-
-		res.json({ message: 'User created successfully.' })
-	} catch (error) {
-		console.error(error)
-	}
-})
+router.post('/sign-up', signUpController)
 
 router.post('/sign-in', async (req, res) => {
 	const { email, password } = req.body
