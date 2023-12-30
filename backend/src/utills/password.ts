@@ -13,3 +13,17 @@ export const encryptPassword = async (password: string): Promise<string> => {
 		throw new Error('Encryption failed')
 	}
 }
+
+export const comparePassword = async (
+	inputPassword: string,
+	hashedPassword: string,
+): Promise<Boolean> => {
+	try {
+		const passwordMatch = await bcrypt.compare(inputPassword, hashedPassword)
+
+		return passwordMatch
+	} catch (error) {
+		console.error('Decryption error:', error)
+		throw new Error('Decryption failed')
+	}
+}
