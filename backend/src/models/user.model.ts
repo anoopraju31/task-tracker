@@ -38,6 +38,19 @@ export const getUserByEmail = async (email: string) => {
 	}
 }
 
+export const getFullUserDetailsByEmail = async (email: string) => {
+	try {
+		const user = await UserModel.findOne({ email }).select(
+			'+authentication.password',
+		)
+
+		return user
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
 export const createUser = async (userData: Record<string, any>) => {
 	try {
 		const user = new UserModel(userData)
