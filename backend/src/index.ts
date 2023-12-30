@@ -1,6 +1,7 @@
 import express from 'express'
 import { connectToMongoDB } from './db'
 import userRouter from './routes/user.routes'
+import taskRouter from './routes/task.routes'
 import mongoose from 'mongoose'
 
 connectToMongoDB()
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', userRouter)
+app.use('/tasks', taskRouter)
 
 app.listen(PORT, () => {
 	console.log(`Server started at port ${PORT}.`)
