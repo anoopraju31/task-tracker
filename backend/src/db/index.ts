@@ -22,31 +22,6 @@ export const connectToMongoDB = async (): Promise<Connection> => {
 			connection.on('disconnected', () => {
 				console.log('Mongoose disconnected from the database')
 			})
-
-			// Handle process exit or termination
-			process.on('exit', async () => {
-				try {
-					await mongoose.connection.close()
-					console.log('MongoDB connection closed through app termination')
-					process.exit(0)
-				} catch (error) {
-					console.error('Error closing MongoDB connection:', error)
-					process.exit(1)
-				}
-			})
-
-			process.on('SIGINT', async () => {
-				try {
-					await mongoose.connection.close()
-					console.log(
-						'MongoDB connection closed through app termination (SIGINT)',
-					)
-					process.exit(0)
-				} catch (error) {
-					console.error('Error closing MongoDB connection:', error)
-					process.exit(1)
-				}
-			})
 		}
 
 		if (!dbInstance) {
