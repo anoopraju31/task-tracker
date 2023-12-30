@@ -93,3 +93,14 @@ export const updateUserByEmail = async (
 		throw error
 	}
 }
+
+export const getUserTasks = async (id: string) => {
+	try {
+		const user = await UserModel.findOne({ _id: id }).populate('tasks').exec()
+
+		return user
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
