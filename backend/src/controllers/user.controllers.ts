@@ -35,6 +35,8 @@ export const signUpController = async (
 		res.json({ message: 'User created successfully.' })
 	} catch (error) {
 		console.error(error)
+
+		res.status(500).json({ message: 'something went wrong' })
 	}
 }
 
@@ -42,29 +44,35 @@ export const signInController = async (
 	req: express.Request,
 	res: express.Response,
 ) => {
-	const { email, password } = req.body
-	const validationResponse = signInSchema.safeParse({ email, password })
+	try {
+		const { email, password } = req.body
+		const validationResponse = signInSchema.safeParse({ email, password })
 
-	if (!validationResponse.success)
-		return res.status(401).json(validationResponse.error.issues[0].message)
+		if (!validationResponse.success)
+			return res.status(401).json(validationResponse.error.issues[0].message)
 
-	const user = await getFullUserDetailsByEmail(email)
+		const user = await getFullUserDetailsByEmail(email)
 
-	if (!user) return res.status(401).json({ message: 'User does not exists.' })
+		if (!user) return res.status(401).json({ message: 'User does not exists.' })
 
-	const passwordMatch = await comparePassword(
-		password,
-		user.authentication?.password!,
-	)
+		const passwordMatch = await comparePassword(
+			password,
+			user.authentication?.password!,
+		)
 
-	if (!passwordMatch)
-		return res.status(403).json({ message: 'Invalid password' })
+		if (!passwordMatch)
+			return res.status(403).json({ message: 'Invalid password' })
 
-	const token = generateToken({
-		name: user.name,
-		email,
-		id: user._id.toString(),
-	})
+		const token = generateToken({
+			name: user.name,
+			email,
+			id: user._id.toString(),
+		})
 
-	res.json({ message: 'successfully signed in.', token })
+		res.json({ message: 'successfully signed in.', token })
+	} catch (error) {
+		console.error(error)
+
+		res.status(500).json({ message: 'something went wrong' })
+	}
 }
