@@ -60,7 +60,11 @@ export const signInController = async (
 	if (!passwordMatch)
 		return res.status(403).json({ message: 'Invalid password' })
 
-	const token = generateToken({ name: user.name, email, id: user._id })
+	const token = generateToken({
+		name: user.name,
+		email,
+		id: user._id.toString(),
+	})
 
 	res.json({ message: 'successfully signed in.', token })
 }
